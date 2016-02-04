@@ -13,6 +13,9 @@ Window::Window(QMainWindow *parent):
 
     m_actNew=new QAction(0);
     m_actNew->setText("New");
+    QIcon icon(":/Icon/FileNew.png");
+    m_actNew->setToolTip("chuang jian wenjian");
+    m_actNew->setIcon(icon);
     m_menu->addAction(m_actNew);
     m_menubar->addMenu(m_menu);
 

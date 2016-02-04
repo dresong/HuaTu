@@ -6,3 +6,6 @@ SOURCES += \
 
 HEADERS += \
     window.h
+
+RESOURCES += \
+    resouce.qrc
