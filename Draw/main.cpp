@@ -1,10 +1,14 @@
 #include<QDebug>
-
-int main()
+#include<QApplication>
+#include<window.h>
+int main(int argc, char *argv[])
 {
     qDebug()<<"--------------------";
     qDebug()<<"++++++++++++++++++++++";
-    qDebug()<<"OOOOOOOOOOOOOOO";
 
-    return 0;
+    QApplication tion(argc,argv);
+
+    Window dow;
+    dow.show();
+    return tion.exec();
 }

@@ -1,2 +1,6 @@
 SOURCES += \
-    main.cpp
+    main.cpp \
+    window.cpp
+
+HEADERS += \
+    window.h
