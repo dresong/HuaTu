@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>Icon/FileNew.png</file>
+        <file>Icon/EditMove.png</file>
+        <file>Icon/FileOpen.png</file>
+        <file>Icon/FileSave.png</file>
     </qresource>
 </RCC>
