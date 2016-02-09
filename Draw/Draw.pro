@@ -2,10 +2,12 @@ QT += widgets
 
 SOURCES += \
     main.cpp \
-    window.cpp
+    window.cpp \
+    typewidget.cpp
 
 HEADERS += \
-    window.h
+    window.h \
+    typewidget.h
 
 RESOURCES += \
     resouce.qrc
