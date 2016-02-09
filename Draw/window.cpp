@@ -2,10 +2,11 @@
 #include "QMenu"
 #include "QMenuBar"
 #include "QToolBar"
+#include "typewidget.h"
 Window::Window(QMainWindow *parent):
     QMainWindow(parent)
 {
-    resize(400,300);
+    resize(800,600);
     m_menubar=this->menuBar();
     connect(m_menubar, SIGNAL(triggered(QAction*)),this, SLOT(slotAction(QAction*)));
 
@@ -77,6 +78,8 @@ Window::Window(QMainWindow *parent):
     connect(tool, SIGNAL(actionTriggered(QAction*)), this, SLOT(slotAction(QAction*)));
     this->addToolBar(tool);
 
+    m_tw = new TypeWidget();
+    this->setCentralWidget(m_tw);
 }
 #include <QDebug>
 void Window::slotAction(QAction *action)
@@ -94,17 +97,20 @@ void Window::slotAction(QAction *action)
         m_actMove->setChecked(false);
         m_actRect->setChecked(false);
         m_actEllipse->setChecked(false);
+        m_tw->setType(Line);
     }
     else if(action==m_actRect)
     {
         m_actLine->setChecked(false);
         m_actMove->setChecked(false);
         m_actEllipse->setChecked(false);
+        m_tw->setType(Rect);
     }
     else if(action==m_actEllipse)
     {
         m_actLine->setChecked(false);
         m_actRect->setChecked(false);
         m_actMove->setChecked(false);
+        m_tw->setType(Ellipse);
     }
 }

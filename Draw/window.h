@@ -2,6 +2,8 @@
 #define WINDOW_H
 #include <QMainWindow>
 
+class TypeWidget;
+
 class Window : public QMainWindow
 {
     Q_OBJECT
@@ -26,6 +28,7 @@ private:
     QAction *m_actEllipse;
 
     QToolBar *tool;
+    TypeWidget *m_tw;
 
 };
 
