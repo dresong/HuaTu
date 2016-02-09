@@ -15,10 +15,15 @@ private:
     QMenuBar *m_menubar;
     QMenu *m_fileMenu;
     QMenu *m_editMenu;
+    QMenu *m_typeMenu;
     QAction *m_actNew;
+    QAction *m_actMove;
     QAction *m_actSave;
     QAction *m_actOpen;
     QAction *m_actExit;
+    QAction *m_actLine;
+    QAction *m_actRect;
+    QAction *m_actEllipse;
 
     QToolBar *tool;
 
