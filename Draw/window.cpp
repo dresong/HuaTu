@@ -75,22 +75,25 @@ Window::Window(QMainWindow *parent):
     tool->addAction(m_actLine);
     tool->addAction(m_actRect);
     tool->addAction(m_actEllipse);
+
     connect(tool, SIGNAL(actionTriggered(QAction*)), this, SLOT(slotAction(QAction*)));
     this->addToolBar(tool);
 
     m_tw = new TypeWidget();
     this->setCentralWidget(m_tw);
+
 }
 #include <QDebug>
 void Window::slotAction(QAction *action)
 {
-    qDebug()<<Q_FUNC_INFO<< action->text();
+//    qDebug()<<Q_FUNC_INFO<< action->text();
     qDebug()<<m_actEllipse->isChecked();
     if(action==m_actMove)
     {
         m_actLine->setChecked(false);
         m_actRect->setChecked(false);
         m_actEllipse->setChecked(false);
+
     }
     else if(action==m_actLine)
     {
@@ -98,6 +101,11 @@ void Window::slotAction(QAction *action)
         m_actRect->setChecked(false);
         m_actEllipse->setChecked(false);
         m_tw->setType(Line);
+        if(!m_actLine->isChecked())
+        {
+            m_tw->setType(None);
+            m_actMove->setChecked(true);
+        }
     }
     else if(action==m_actRect)
     {
@@ -105,6 +113,11 @@ void Window::slotAction(QAction *action)
         m_actMove->setChecked(false);
         m_actEllipse->setChecked(false);
         m_tw->setType(Rect);
+        if(!m_actRect->isChecked())
+        {
+            m_tw->setType(None);
+            m_actMove->setChecked(true);
+        }
     }
     else if(action==m_actEllipse)
     {
@@ -112,5 +125,10 @@ void Window::slotAction(QAction *action)
         m_actRect->setChecked(false);
         m_actMove->setChecked(false);
         m_tw->setType(Ellipse);
+        if(!m_actEllipse->isChecked())
+        {
+            m_tw->setType(None);
+            m_actMove->setChecked(true);
+        }
     }
 }

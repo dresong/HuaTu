@@ -28,6 +28,10 @@ public slots:
 private:
     QPoint m_p1,m_p2;
     Type m_type;
+    QList<QLine> m_Lines;
+    QList<QRect> m_Rects;
+    QList<QRect> m_Ellipses;
+    bool m_buer;
 };
 
 #endif // TYPEWIDGET_H

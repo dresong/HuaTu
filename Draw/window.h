@@ -1,6 +1,7 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 #include <QMainWindow>
+#include <QSpinBox>
 
 class TypeWidget;
 
@@ -29,7 +30,7 @@ private:
 
     QToolBar *tool;
     TypeWidget *m_tw;
-
+    QSpinBox *m_spinBox;
 };
 
 #endif // WINDOW_H
