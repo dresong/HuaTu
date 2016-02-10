@@ -10,6 +10,7 @@ class Window : public QMainWindow
     Q_OBJECT
 public:
     explicit Window(QMainWindow *parent=0);
+    int getWidth();
 
 public slots:
     void slotAction(QAction* action);

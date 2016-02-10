@@ -75,14 +75,27 @@ Window::Window(QMainWindow *parent):
     tool->addAction(m_actLine);
     tool->addAction(m_actRect);
     tool->addAction(m_actEllipse);
+    //shurukuang
+    m_spinBox = new QSpinBox(tool);
 
+    tool->addWidget(m_spinBox);
+    m_spinBox->setMaximumWidth(100);
+    m_spinBox->setMinimumWidth(100);
     connect(tool, SIGNAL(actionTriggered(QAction*)), this, SLOT(slotAction(QAction*)));
     this->addToolBar(tool);
 
     m_tw = new TypeWidget();
+    m_tw->setWindow(this);
     this->setCentralWidget(m_tw);
 
 }
+
+int Window::getWidth()
+{
+    int v = m_spinBox->value();
+    return v;
+}
+
 #include <QDebug>
 void Window::slotAction(QAction *action)
 {

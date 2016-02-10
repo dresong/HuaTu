@@ -1,6 +1,7 @@
 #include "typewidget.h"
 #include<QMouseEvent>
 #include<QPainter>
+
 TypeWidget::TypeWidget(QWidget *parent) :
     QWidget(parent)
 {
@@ -11,6 +12,11 @@ TypeWidget::TypeWidget(QWidget *parent) :
 void TypeWidget::setType(Type type)
 {
     m_type=type;
+}
+
+void TypeWidget::setWindow(Window *window)
+{
+    m_dow = window;
 }
 
 void TypeWidget::paintEvent(QPaintEvent *)
@@ -39,6 +45,9 @@ void TypeWidget::paintEvent(QPaintEvent *)
     {
         if(m_buer)
         {
+            QPen pen;
+            pen.setWidth(m_dow->getWidth());
+            paint.setPen(pen);
             paint.drawLine(QLine(m_p1,m_p2));
         }
     }

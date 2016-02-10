@@ -2,6 +2,7 @@
 #define TYPEWIDGET_H
 
 #include <QWidget>
+#include <window.h>
 enum Type
 {
     None,
@@ -17,6 +18,8 @@ class TypeWidget : public QWidget
 public:
     explicit TypeWidget(QWidget *parent = 0);
     void setType(Type type);
+    void setWindow(Window* window);
+
 protected:
     void paintEvent(QPaintEvent *);
     void mousePressEvent(QMouseEvent *);
@@ -32,6 +35,7 @@ private:
     QList<QRect> m_Rects;
     QList<QRect> m_Ellipses;
     bool m_buer;
+    Window *m_dow;
 };
 
 #endif // TYPEWIDGET_H
