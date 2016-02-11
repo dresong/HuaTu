@@ -19,32 +19,35 @@ void TypeWidget::setWindow(Window *window)
     m_dow = window;
 }
 
-void TypeWidget::paintEvent(QPaintEvent *)
+void TypeWidget::paintEvent(QPaintEvent *e)
 {
     QPainter paint(this);
+
     paint.fillRect(this->rect(),Qt::white);
-//Line
-    for(int i=0; i<m_Lines.count(); i++)
+    paint.setRenderHint(QPainter::Antialiasing);
+
+    for(int i = 0; i< m_Lines.count(); i++)
     {
-        QLine line=m_Lines.at(i);
-        paint.drawLine(line);
+        GraphLine line = m_Lines.at(i);
+        line.paint(&paint);
     }
 //Rect
     for(int i=0; i<m_Rects.count(); i++)
     {
-        QRect t=m_Rects.at(i);
-        paint.drawRect(t);
+        GraphRect rect = m_Rects.at(i);
+        rect.paint(&paint);
     }
 //Ellipse
     for(int i=0; i<m_Ellipses.count(); i++)
     {
-        QRect r=m_Ellipses.at(i);
-        paint.drawEllipse(r);
+        GraphEllipse ellipse = m_Ellipses.at(i);
+        ellipse.paint(&paint);
     }
     if(m_type==Line)
     {
         if(m_buer)
         {
+
             QPen pen;
             pen.setWidth(m_dow->getWidth());
             paint.setPen(pen);
@@ -55,6 +58,10 @@ void TypeWidget::paintEvent(QPaintEvent *)
     {
         if(m_buer)
         {
+            QPen pen;
+            pen.setWidth(m_dow->getWidth());
+            paint.setPen(pen);
+            paint.setBrush(m_dow->color());
             paint.drawRect(QRect(m_p1,m_p2));
         }
     }
@@ -62,6 +69,10 @@ void TypeWidget::paintEvent(QPaintEvent *)
     {
         if(m_buer)
         {
+            QPen pen;
+            pen.setWidth((m_dow->getWidth()));
+            paint.setPen(pen);
+            paint.setBrush(m_dow->color());
             paint.drawEllipse(QRect(m_p1,m_p2));
         }
     }
@@ -86,17 +97,35 @@ void TypeWidget::mouseReleaseEvent(QMouseEvent *e)
     if(m_type==Line)
     {
         QLine line(m_p1,m_p2);
-        m_Lines.append(line);
+        GraphLine gl;
+        gl.setLine(line);
+        QPen pen;
+        pen.setColor(m_dow->color());
+        pen.setWidth(m_dow->getWidth());
+        gl.setPen(pen);
+        m_Lines.append(gl);
     }
     else if(m_type==Rect)
     {
         QRect r(m_p1,m_p2);
-        m_Rects.append(r);
+        GraphRect gr;
+        gr.setColor(m_dow->color());
+        gr.setRect(r);
+        QPen pen;
+        pen.setWidth(m_dow->getWidth());
+        gr.setPen(pen);
+        m_Rects.append(gr);
     }
     else if(m_type==Ellipse)
     {
         QRect r(m_p1,m_p2);
-        m_Ellipses.append(r);
+        GraphEllipse ge;
+        ge.setColor(m_dow->color());
+        ge.setEllipse(r);
+        QPen pen;
+        pen.setWidth(m_dow->getWidth());
+        ge.setPen(pen);
+        m_Ellipses.append(ge);
     }
     update();
 }

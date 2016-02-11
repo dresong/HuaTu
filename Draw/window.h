@@ -2,7 +2,7 @@
 #define WINDOW_H
 #include <QMainWindow>
 #include <QSpinBox>
-
+#include "colorbutton.h"
 class TypeWidget;
 
 class Window : public QMainWindow
@@ -11,6 +11,7 @@ class Window : public QMainWindow
 public:
     explicit Window(QMainWindow *parent=0);
     int getWidth();
+    QColor color();
 
 public slots:
     void slotAction(QAction* action);
@@ -32,6 +33,7 @@ private:
     QToolBar *tool;
     TypeWidget *m_tw;
     QSpinBox *m_spinBox;
+    ColorButton *m_button;
 };
 
 #endif // WINDOW_H

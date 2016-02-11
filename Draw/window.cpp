@@ -3,6 +3,7 @@
 #include "QMenuBar"
 #include "QToolBar"
 #include "typewidget.h"
+#include "colorbutton.h"
 Window::Window(QMainWindow *parent):
     QMainWindow(parent)
 {
@@ -79,8 +80,13 @@ Window::Window(QMainWindow *parent):
     m_spinBox = new QSpinBox(tool);
 
     tool->addWidget(m_spinBox);
-    m_spinBox->setMaximumWidth(100);
-    m_spinBox->setMinimumWidth(100);
+    m_spinBox->setMaximumWidth(60);
+    m_spinBox->setMinimumWidth(60);
+    m_spinBox->setValue(1);
+    //btn
+    m_button = new ColorButton();
+    tool->addWidget(m_button);
+
     connect(tool, SIGNAL(actionTriggered(QAction*)), this, SLOT(slotAction(QAction*)));
     this->addToolBar(tool);
 
@@ -88,12 +94,19 @@ Window::Window(QMainWindow *parent):
     m_tw->setWindow(this);
     this->setCentralWidget(m_tw);
 
+
+
+
 }
 
 int Window::getWidth()
 {
-    int v = m_spinBox->value();
-    return v;
+    return m_spinBox->value();
+}
+
+QColor Window::color()
+{
+    return m_button->color();
 }
 
 #include <QDebug>

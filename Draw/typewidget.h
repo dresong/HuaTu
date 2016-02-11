@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <window.h>
+#include <graphline.h>
+
 enum Type
 {
     None,
@@ -31,11 +33,14 @@ public slots:
 private:
     QPoint m_p1,m_p2;
     Type m_type;
-    QList<QLine> m_Lines;
-    QList<QRect> m_Rects;
-    QList<QRect> m_Ellipses;
+    QList<GraphLine> m_Lines;
+    GraphLine* m_pLine;
+    QList<GraphRect> m_Rects;
+    QList<GraphEllipse> m_Ellipses;
+
     bool m_buer;
     Window *m_dow;
+
 };
 
 #endif // TYPEWIDGET_H
