@@ -11,7 +11,6 @@ enum Type
     Line,
     Rect,
     Ellipse
-
 };
 
 class TypeWidget : public QWidget
@@ -21,6 +20,8 @@ public:
     explicit TypeWidget(QWidget *parent = 0);
     void setType(Type type);
     void setWindow(Window* window);
+    void save(const QString& fileName);
+    void open(const QString& fileName);
 
 protected:
     void paintEvent(QPaintEvent *);
@@ -33,13 +34,9 @@ public slots:
 private:
     QPoint m_p1,m_p2;
     Type m_type;
-    QList<GraphLine> m_Lines;
-    GraphLine* m_pLine;
-    QList<GraphRect> m_Rects;
-    QList<GraphEllipse> m_Ellipses;
-
     bool m_buer;
-    Window *m_dow;
+    Window *m_dow;    
+    QList<GraphItem*> m_childItems;
 
 };
 

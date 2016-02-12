@@ -4,6 +4,9 @@
 #include "QToolBar"
 #include "typewidget.h"
 #include "colorbutton.h"
+#include "QDebug"
+#include <QFileDialog>
+
 Window::Window(QMainWindow *parent):
     QMainWindow(parent)
 {
@@ -22,6 +25,9 @@ Window::Window(QMainWindow *parent):
     m_fileMenu->addAction(m_actNew);
     m_menubar->addMenu(m_fileMenu);
 
+    QAction act1("Test",0);
+    m_fileMenu->addAction(&act1); // QList<QAction*> actions;
+
     m_actOpen = new QAction(0);
     m_actOpen->setText("Open");
     QIcon Iopen(":/Icon/FileOpen.png");
@@ -38,21 +44,19 @@ Window::Window(QMainWindow *parent):
     m_actExit->setText("Exit");
     m_fileMenu->addAction(m_actExit);
 
-    //editMenu
+//editMenu
     m_editMenu=new QMenu();
     m_editMenu->setTitle("Edit");
     m_menubar->addMenu(m_editMenu);
     m_actMove=new QAction(QIcon(":/Icon/EditMove.png"), "Move",this);
     m_actMove->setCheckable(true);
-    //    m_actMove->setText("Move");
-//    QIcon Imove(":/Icon/EditMove.png");
-//    m_actMove->setIcon(Imove);
     m_editMenu->addAction(m_actMove);
 
-    //typeMenu
+//typeMenu
     m_typeMenu = new QMenu();
     m_typeMenu->setTitle("Type");
     m_menubar->addMenu(m_typeMenu);
+
     m_actLine=new QAction(QIcon(":/Icon/DrawLine.png"),"Line",this);
     m_typeMenu->addAction(m_actLine);
     m_actLine->setCheckable(true);
@@ -65,7 +69,7 @@ Window::Window(QMainWindow *parent):
     m_typeMenu->addAction(m_actEllipse);
     m_actEllipse->setCheckable(true);
 
-    //boolBar
+//boolBar
     tool=new QToolBar();
     tool->addAction(m_actNew);
     tool->addAction(m_actOpen);
@@ -76,27 +80,24 @@ Window::Window(QMainWindow *parent):
     tool->addAction(m_actLine);
     tool->addAction(m_actRect);
     tool->addAction(m_actEllipse);
-    //shurukuang
+//shurukuang
     m_spinBox = new QSpinBox(tool);
 
     tool->addWidget(m_spinBox);
     m_spinBox->setMaximumWidth(60);
     m_spinBox->setMinimumWidth(60);
     m_spinBox->setValue(1);
-    //btn
+//btn
     m_button = new ColorButton();
     tool->addWidget(m_button);
-
-    connect(tool, SIGNAL(actionTriggered(QAction*)), this, SLOT(slotAction(QAction*)));
     this->addToolBar(tool);
 
+    connect(tool, SIGNAL(actionTriggered(QAction*)), this, SLOT(slotAction(QAction*)));
+
     m_tw = new TypeWidget();
+    qDebug()<<"m_tw : "<<m_tw;
     m_tw->setWindow(this);
     this->setCentralWidget(m_tw);
-
-
-
-
 }
 
 int Window::getWidth()
@@ -109,10 +110,8 @@ QColor Window::color()
     return m_button->color();
 }
 
-#include <QDebug>
 void Window::slotAction(QAction *action)
 {
-//    qDebug()<<Q_FUNC_INFO<< action->text();
     qDebug()<<m_actEllipse->isChecked();
     if(action==m_actMove)
     {
@@ -156,5 +155,17 @@ void Window::slotAction(QAction *action)
             m_tw->setType(None);
             m_actMove->setChecked(true);
         }
+    }
+    else if(action == m_actSave)
+    {
+        QString fileName = QFileDialog::getSaveFileName();
+        m_tw->save(fileName);
+        setWindowTitle(fileName);
+    }
+    else if(action == m_actOpen)
+    {
+        QString fileName = QFileDialog::getOpenFileName();
+        m_tw->open(fileName);
+        setWindowTitle(fileName);
     }
 }
