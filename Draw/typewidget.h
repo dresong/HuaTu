@@ -4,13 +4,16 @@
 #include <QWidget>
 #include <window.h>
 #include <graphline.h>
-
+#include "graphrect.h"
+#include "graphimage.h"
 enum Type
 {
     None,
     Line,
     Rect,
-    Ellipse
+    Ellipse,
+    Image,
+    Text
 };
 
 class TypeWidget : public QWidget

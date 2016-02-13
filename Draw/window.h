@@ -28,6 +28,8 @@ private:
     QAction *m_actExit;
     QAction *m_actLine;
     QAction *m_actRect;
+    QAction *m_actImage;
+    QAction *m_actString;
     QAction *m_actEllipse;
 
     QToolBar *tool;

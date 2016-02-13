@@ -69,6 +69,14 @@ Window::Window(QMainWindow *parent):
     m_typeMenu->addAction(m_actEllipse);
     m_actEllipse->setCheckable(true);
 
+    m_actImage=new QAction(QIcon(":Icon/DrawImage.png"),"Image",this);
+    m_typeMenu->addAction(m_actImage);
+    m_actImage->setCheckable(true);
+
+    m_actString=new QAction(QIcon(":Icon/DrawString.png"),"Text",this);
+    m_typeMenu->addAction(m_actString);
+    m_actString->setCheckable(true);
+
 //boolBar
     tool=new QToolBar();
     tool->addAction(m_actNew);
@@ -80,6 +88,8 @@ Window::Window(QMainWindow *parent):
     tool->addAction(m_actLine);
     tool->addAction(m_actRect);
     tool->addAction(m_actEllipse);
+    tool->addAction(m_actImage);
+    tool->addAction(m_actString);
 //shurukuang
     m_spinBox = new QSpinBox(tool);
 
@@ -91,7 +101,6 @@ Window::Window(QMainWindow *parent):
     m_button = new ColorButton();
     tool->addWidget(m_button);
     this->addToolBar(tool);
-
     connect(tool, SIGNAL(actionTriggered(QAction*)), this, SLOT(slotAction(QAction*)));
 
     m_tw = new TypeWidget();
@@ -118,6 +127,8 @@ void Window::slotAction(QAction *action)
         m_actLine->setChecked(false);
         m_actRect->setChecked(false);
         m_actEllipse->setChecked(false);
+        m_actImage->setChecked(false);
+        m_actString->setChecked(false);
 
     }
     else if(action==m_actLine)
@@ -125,6 +136,8 @@ void Window::slotAction(QAction *action)
         m_actMove->setChecked(false);
         m_actRect->setChecked(false);
         m_actEllipse->setChecked(false);
+        m_actImage->setChecked(false);
+        m_actString->setChecked(false);
         m_tw->setType(Line);
         if(!m_actLine->isChecked())
         {
@@ -137,6 +150,8 @@ void Window::slotAction(QAction *action)
         m_actLine->setChecked(false);
         m_actMove->setChecked(false);
         m_actEllipse->setChecked(false);
+        m_actImage->setChecked(false);
+        m_actString->setChecked(false);
         m_tw->setType(Rect);
         if(!m_actRect->isChecked())
         {
@@ -149,8 +164,37 @@ void Window::slotAction(QAction *action)
         m_actLine->setChecked(false);
         m_actRect->setChecked(false);
         m_actMove->setChecked(false);
+        m_actImage->setChecked(false);
+        m_actString->setChecked(false);
         m_tw->setType(Ellipse);
         if(!m_actEllipse->isChecked())
+        {
+            m_tw->setType(None);
+            m_actMove->setChecked(true);
+        }
+    }
+    else if(action==m_actImage)
+    {
+        m_actLine->setChecked(false);
+        m_actRect->setChecked(false);
+        m_actMove->setChecked(false);
+        m_actString->setChecked(false);
+        m_tw->setType(Image);
+        if(!m_actImage->isChecked())
+        {
+            m_tw->setType(None);
+            m_actMove->setChecked(true);
+        }
+
+    }
+    else if(action==m_actString)
+    {
+        m_actLine->setChecked(false);
+        m_actRect->setChecked(false);
+        m_actMove->setChecked(false);
+        m_actImage->setChecked(false);
+        m_tw->setType(Text);
+        if(!m_actString->isChecked())
         {
             m_tw->setType(None);
             m_actMove->setChecked(true);

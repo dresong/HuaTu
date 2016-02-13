@@ -2,6 +2,7 @@
 #include<QMouseEvent>
 #include<QPainter>
 #include<QDebug>
+#include<QFileDialog>
 TypeWidget::TypeWidget(QWidget *parent) :
     QWidget(parent)
 {
@@ -17,8 +18,6 @@ void TypeWidget::setType(Type type)
 void TypeWidget::setWindow(Window *window)
 {
     m_dow = window;
-    qDebug()<<"m_dow = "<<m_dow<<" this : "<<this;
-    qDebug()<<"&m_dow = "<<&m_dow;
 }
 
 void TypeWidget::save(const QString &fileName)
@@ -40,25 +39,33 @@ void TypeWidget::open(const QString &fileName)
     QTextStream in(&file);
     while(!in.atEnd())
     {
-        int type;
-        in>>type;
-        if(type == 1)
+        GraphType type;
+        int val;
+        in>>val;
+        type = (GraphType)val;
+        if(type == gLine)
         {
             GraphItem* line = new GraphLine();
             line->load(in);
             m_childItems.append(line);
         }
-        else if(type == 2)
+        else if(type == gRect)
         {
             GraphItem* line = new GraphRect();
             line->load(in);
             m_childItems.append(line);
         }
-        else if(type == 3)
+        else if(type == gEllipse)
         {
             GraphItem* line = new GraphEllipse();
             line->load(in);
             m_childItems.append(line);
+        }
+        else if(type == gImage)
+        {
+            GraphItem* item = new GraphImage();
+            item->load(in);
+            m_childItems.append(item);
         }
     }
     update();
@@ -80,21 +87,21 @@ void TypeWidget::paintEvent(QPaintEvent *e)
     {
         if(m_buer)
         {
-
             QPen pen;
             pen.setWidth(m_dow->getWidth());
             paint.setPen(pen);
             paint.drawLine(QLine(m_p1,m_p2));
         }
     }
-    else if(m_type==Rect)
+    else if(m_type==Rect || m_type == Image)
     {
         if(m_buer)
         {
             QPen pen;
             pen.setWidth(m_dow->getWidth());
             paint.setPen(pen);
-            paint.setBrush(m_dow->color());
+            if(m_type == Rect)
+                paint.setBrush(m_dow->color());
             paint.drawRect(QRect(m_p1,m_p2));
         }
     }
@@ -159,6 +166,15 @@ void TypeWidget::mouseReleaseEvent(QMouseEvent *e)
         pen.setWidth(m_dow->getWidth());
         ge->setPen(pen);
         m_childItems.append(ge);
+    }
+    else if(m_type==Image)
+    {
+        GraphImage *gi = new GraphImage;
+        gi->setpoint(m_p1);
+        QRect r(m_p1, m_p2);
+        QString str=QFileDialog::getOpenFileName();
+        gi->setImage(QImage(str).scaled(r.size()));
+        m_childItems.append(gi);
     }
     update();
 }
