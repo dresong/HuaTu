@@ -21,3 +21,7 @@ HEADERS += \
 
 RESOURCES += \
     resouce.qrc
+
+INCLUDEPATH += ../Draw/lib
+
+LIBS += -L../Draw/lib -lColorPicker

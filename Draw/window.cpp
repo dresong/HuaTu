@@ -6,13 +6,12 @@
 #include "colorbutton.h"
 #include "QDebug"
 #include <QFileDialog>
-
 Window::Window(QMainWindow *parent):
     QMainWindow(parent)
 {
     resize(800,600);
     m_menubar=this->menuBar();
-    connect(m_menubar, SIGNAL(triggered(QAction*)),this, SLOT(slotAction(QAction*)));
+//    connect(m_menubar, SIGNAL(triggered(QAction*)),this, SLOT(slotAction(QAction*)));
 
     //fileMenu
     m_fileMenu=new QMenu();
@@ -20,13 +19,19 @@ Window::Window(QMainWindow *parent):
     m_actNew=new QAction(0);
     m_actNew->setText("New");
     QIcon Inew(":/Icon/FileNew.png");
-//    m_actNew->setToolTip("chuang jian wenjian");
+
     m_actNew->setIcon(Inew);
     m_fileMenu->addAction(m_actNew);
     m_menubar->addMenu(m_fileMenu);
-
+    /**
+    act1 是临时变量，临时变量是在栈上创建的，
+    在函数运行完了后，会被系统自动删除，所以运行后，在
+    文件菜单上看不到 test 的动作（子菜单）
+    new 创建的是在堆上创建的，需要手动去删除（delete 指针）；
+    比如： m_actOpen, 要删除的话，要delete m_actOpen
+     */
     QAction act1("Test",0);
-    m_fileMenu->addAction(&act1); // QList<QAction*> actions;
+    m_fileMenu->addAction(&act1);
 
     m_actOpen = new QAction(0);
     m_actOpen->setText("Open");
@@ -97,14 +102,14 @@ Window::Window(QMainWindow *parent):
     m_spinBox->setMaximumWidth(60);
     m_spinBox->setMinimumWidth(60);
     m_spinBox->setValue(1);
-//btn
-    m_button = new ColorButton();
-    tool->addWidget(m_button);
+//colorbtn
+    m_epc=new EPColorPicker();
+    tool->addWidget(m_epc);
     this->addToolBar(tool);
     connect(tool, SIGNAL(actionTriggered(QAction*)), this, SLOT(slotAction(QAction*)));
 
+//zhongxinchuangkou
     m_tw = new TypeWidget();
-    qDebug()<<"m_tw : "<<m_tw;
     m_tw->setWindow(this);
     this->setCentralWidget(m_tw);
 }
@@ -116,12 +121,13 @@ int Window::getWidth()
 
 QColor Window::color()
 {
-    return m_button->color();
+    return m_epc->currentColor();
 }
 
 void Window::slotAction(QAction *action)
 {
-    qDebug()<<m_actEllipse->isChecked();
+    qDebug()<<m_menubar<<tool<<sender();
+
     if(action==m_actMove)
     {
         m_actLine->setChecked(false);
@@ -204,12 +210,13 @@ void Window::slotAction(QAction *action)
     {
         QString fileName = QFileDialog::getSaveFileName();
         m_tw->save(fileName);
-        setWindowTitle(fileName);
+        this->setWindowTitle(fileName);
     }
     else if(action == m_actOpen)
     {
+        qDebug()<<Q_FUNC_INFO;
         QString fileName = QFileDialog::getOpenFileName();
         m_tw->open(fileName);
-        setWindowTitle(fileName);
+        this->setWindowTitle(fileName);
     }
 }

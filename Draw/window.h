@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include <QSpinBox>
 #include "colorbutton.h"
+#include <EPColorPicker.h>
 class TypeWidget;
 
 class Window : public QMainWindow
@@ -36,6 +37,7 @@ private:
     TypeWidget *m_tw;
     QSpinBox *m_spinBox;
     ColorButton *m_button;
+    EPColorPicker *m_epc;
 };
 
 #endif // WINDOW_H
