@@ -68,7 +68,7 @@ void TypeWidget::open(const QString &fileName)
             item->load(in);
             m_childItems.append(item);
         }
-        QThread::sleep(1);
+//        QThread::sleep(1);
     }
     update();
 }
