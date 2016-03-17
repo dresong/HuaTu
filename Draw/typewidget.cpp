@@ -206,5 +206,5 @@ void Thread::run()
 {
     if(m_tw)
         m_tw->open(m_fileName);
-    delete this;
+    this->deleteLater();
 }
