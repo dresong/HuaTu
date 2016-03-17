@@ -42,5 +42,20 @@ private:
     QList<GraphItem*> m_childItems;
 
 };
+#include <QThread>
+class Thread : public QThread
+{
+    Q_OBJECT
+public:
+    Thread(QObject *parent = 0);
+    Thread(const QString& fileName, TypeWidget* tw, QObject* parent = 0);
+    void setFileName(const QString &fileName);
+    void setTypeWidget(TypeWidget *tw);
+protected:
+    void run();
+private:
+    TypeWidget *m_tw;
+    QString m_fileName;
+};
 
 #endif // TYPEWIDGET_H

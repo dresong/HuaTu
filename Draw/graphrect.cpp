@@ -8,11 +8,11 @@ GraphRect::GraphRect()
 void GraphRect::paint(QPainter *painter)
 {
     qDebug()<<Q_FUNC_INFO;
-    painter->save();
+   // painter->save();
     painter->setPen(m_pen);
     painter->setBrush(m_color);
     painter->drawRect(m_rect);
-    painter->restore();
+   // painter->restore();
 }
 
 void GraphRect::setRect(QRect rect)

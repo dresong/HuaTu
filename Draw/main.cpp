@@ -13,9 +13,10 @@ int main(int argc, char *argv[])
 
     QApplication tion(argc,argv);
 
-    Window dow;
+    Window *dow = new Window();
     qDebug()<<"dow =="<<&dow;
-    dow.show();
+    dow->show();
+
 
     int array[8] = { 5,90,20,10,34, 657,897,23};
 

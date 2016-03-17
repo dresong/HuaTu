@@ -31,6 +31,7 @@ void TypeWidget::save(const QString &fileName)
         item->save(in);
     }
 }
+#include<QThread>
 
 void TypeWidget::open(const QString &fileName)
 {
@@ -67,6 +68,7 @@ void TypeWidget::open(const QString &fileName)
             item->load(in);
             m_childItems.append(item);
         }
+        QThread::sleep(1);
     }
     update();
 }
@@ -177,4 +179,32 @@ void TypeWidget::mouseReleaseEvent(QMouseEvent *e)
         m_childItems.append(gi);
     }
     update();
+}
+
+Thread::Thread(QObject *parent):QThread(parent)
+{
+
+}
+
+Thread::Thread(const QString &fileName, TypeWidget *tw, QObject *parent)
+    :QThread(parent)
+{
+    m_fileName = fileName;
+    m_tw = tw;
+}
+
+void Thread::setFileName(const QString &fileName)
+{
+    m_fileName = fileName;
+}
+
+void Thread::setTypeWidget(TypeWidget *tw)
+{
+    m_tw = tw;
+}
+void Thread::run()
+{
+    if(m_tw)
+        m_tw->open(m_fileName);
+    delete this;
 }

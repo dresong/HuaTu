@@ -6,7 +6,6 @@
 #include "colorbutton.h"
 #include "QDebug"
 #include <QFileDialog>
-
 Window::Window(QMainWindow *parent):
     QMainWindow(parent)
 {
@@ -209,7 +208,11 @@ void Window::slotAction(QAction *action)
     else if(action == m_actOpen)
     {
         QString fileName = QFileDialog::getOpenFileName();
-        m_tw->open(fileName);
+        Thread *read = new Thread(fileName, m_tw);
+        read->setFileName(fileName);
+        read->setTypeWidget(m_tw);
+        read->start();
+//        m_tw->open(fileName);
         setWindowTitle(fileName);
     }
 }
